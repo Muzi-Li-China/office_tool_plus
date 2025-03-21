@@ -5,7 +5,7 @@ pip install office-tool-plus -i https://mirrors.aliyun.com/pypi/simple/
 
 # 使用
 ## excel
-to_pdf(excel_path: str, sheet_names: list = None, pdf_dir: str = None) 
+### to_pdf(excel_path: str, sheet_names: list = None, pdf_dir: str = None) 
 > 将 Excel 导出为pdf
 
 **参数：**
