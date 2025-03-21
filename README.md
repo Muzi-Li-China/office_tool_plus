@@ -9,10 +9,10 @@ pip install office-tool-plus -i https://mirrors.aliyun.com/pypi/simple/
 > 将 Excel 导出为pdf
 
 **参数：**
-> - excel_path: str - excel文件路径
-> - sheet_names: list - 需要转换
-> - pdf_dir: str - pdf保存的文件夹
-> - return：生成的pdf文件路径
+> - `excel_path`：excel文件路径
+> - `sheet_names`：需要转换的 sheet 名称列表
+> - `pdf_dir`：pdf保存的文件夹
+> - `return`：生成的pdf文件路径
 
 **示例：**
 ```shell
