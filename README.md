@@ -2,9 +2,9 @@
 
 ```shell
 # 国内源
-pip install -i https://mirrors.aliyun.com/pypi/simple/ --upgrade office-tool-plus
+pip install --upgrade office-tool-plus -i https://mirrors.aliyun.com/pypi/simple/ 
 # 官方源（最新版）
-pip install -i https://pypi.org/simple  --upgrade office-tool-plus
+pip install --upgrade office-tool-plus -i https://pypi.org/simple  
 ```
 
 # 使用
