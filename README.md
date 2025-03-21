@@ -1,5 +1,7 @@
 # 安装
 
+> `office-tool-plus` 一些自动化办公的工具包
+
 ```shell
 # 国内源
 pip install --upgrade office-tool-plus -i https://mirrors.aliyun.com/pypi/simple/ 
@@ -119,13 +121,13 @@ word.single_to_pdf('test.docx', pdf_dir='output')
 ```shell
 from office_tool_plus import WordTools
 
-excel = WordTools()
+word = WordTools()
 # 将 test 目录下（包含子目录）所有的 Word 文件批量导出为 pdf ，并保存在源目录下
-excel.many_to_pdf('test')
+word.many_to_pdf('test')
 # 将 test 目录下（包含子目录）所有的 Word 文件批量导出为 pdf，并保存在 output 目录下
-excel.many_to_pdf('test', pdf_dir='output')
+word.many_to_pdf('test', pdf_dir='output')
 # 将 test 目录下（不包含子目录）所有的 Word 文件批量导出为 pdf，并保存在源目录下
-excel.many_to_pdf('test', recursive=False)
+word.many_to_pdf('test', recursive=False)
 # 将 test 目录下（不包含子目录）,后缀是 *.docx 的 Word 文件批量导出为 pdf，并保存在 output 目录下
-excel.many_to_pdf('test', suffix=['*.docx'], recursive=False, pdf_dir='output')
+word.many_to_pdf('test', suffix=['*.docx'], recursive=False, pdf_dir='output')
 ```
