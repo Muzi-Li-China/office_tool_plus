@@ -1,4 +1,4 @@
-from src.office_tool_plus.utils import *
+from .utils import *
 
 
 class ExcelTools:
@@ -29,7 +29,7 @@ class ExcelTools:
 
         # 检查并准备文件路径
         excel_path = check_file_path(excel_path)
-        pdf_path = save_file_path(excel_path, "output", pdf_dir)
+        pdf_path = save_file_path(excel_path, ".pdf", pdf_dir)
 
         # 如果没有提供特定的工作表名称，则导出所有工作表
         if self.app is None:
