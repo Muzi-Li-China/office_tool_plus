@@ -1,62 +1,98 @@
-from pathlib import Path
+from src.office_tool_plus.utils import *
 
 
-class WinExcel:
+class ExcelTools:
     def __init__(self):
+        self.app = None
+
+    def create_app(self):
         from win32com.client import gencache
         self.app = gencache.EnsureDispatch("Excel.Application")
         self.app.Visible = False
 
-    @staticmethod
-    def check_path(input_path: str, suffix: str, output_dir: str = None):
+    def close_app(self):
+        self.app.Quit()
+        self.app = None
+
+    def ws_to_pdf(self, excel_path: str, sheet_names: list = None, pdf_dir: str = None):
         """
-        检查给定的文件路径是否存在。如果提供了文件保存的目录，则检查该目录是否存在，
-        并根据源文件名在该目录下生成对应的新文件路径。
+        将指定的Excel工作簿导出为PDF格式。
 
-        :param input_path: 源文件的路径
-        :param suffix：文件后缀
-        :param output_dir: 输出文件的目录，如果不传，则默认在源文件目录
-        :raises FileNotFoundError: 如果指定的文件路径或目录不存在
+        参数:
+        - excel_path: str, Excel文件的路径。
+        - sheet_names: list, 需要导出的工作表名称列表。如果未提供，则默认导出所有工作表。
+        - pdf_dir: str, PDF文件的保存目录。如果未提供，则默认保存在Excel文件的同目录下。
+
+        返回:
+        - pdf_path: 导出的PDF文件路径。
         """
-        # 获取 excel 文件的绝对路径
-        try:
-            abs_input_path = Path(input_path).resolve(strict=True)
-        except FileNotFoundError:
-            raise FileNotFoundError(f"指定的文件路径 '{input_path}' 不存在。")
 
-        # 获取 pdf 文件的绝对路径
-        if output_dir is None:
-            abs_output_dir = abs_input_path.with_suffix('.pdf')
-        else:
-            abs_pdf_dir = Path(output_dir).resolve()
-            if not abs_pdf_dir.exists():
-                raise FileNotFoundError(f"指定的保存目录 '{abs_pdf_dir}' 不存在。")
-            abs_output_dir = abs_pdf_dir / f"{abs_input_path.stem}.{suffix}"
-        return abs_input_path, abs_output_dir
+        # 检查并准备文件路径
+        excel_path = check_file_path(excel_path)
+        pdf_path = save_file_path(excel_path, "output", pdf_dir)
 
-    def to_pdf(self, excel_path: str, sheet_names: list = None, pdf_dir: str = None):
-        excel_path, pdf_path = self.check_path(excel_path, "pdf", pdf_dir)
         # 如果没有提供特定的工作表名称，则导出所有工作表
+        if self.app is None:
+            self.create_app()
+
+        # 打开Excel工作簿
         workbook = self.app.Workbooks.Open(excel_path)
+
+        # 确定需要导出的工作表名称列表
         sheet_names = sheet_names or [sheet.Name for sheet in workbook.Sheets]
+
+        # 识别出需要隐藏的工作表
         sheets_to_hide = [sheet for sheet in workbook.Sheets if sheet.Name not in sheet_names]
+        # 临时隐藏不需要导出的工作表
+        for sheet in sheets_to_hide:
+            sheet.Visible = False
+
         try:
-            # 临时隐藏不需要导出的工作表
-            for sheet in sheets_to_hide:
-                sheet.Visible = False
             # 导出可见的工作表为PDF
             workbook.ExportAsFixedFormat(0, str(pdf_path))
-        finally:
-            # 恢复所有工作表的可见性
-            for sheet in sheets_to_hide:
-                sheet.Visible = True
-            workbook.Close(SaveChanges=False)
+        except Exception as e:
+            print(f"导出工作表到PDF时出错：{e}")
+
+        # 恢复所有工作表的可见性
+        for sheet in sheets_to_hide:
+            sheet.Visible = True
+        # 关闭工作簿时不保存更改
+        workbook.Close(SaveChanges=False)
+        # 退出Excel应用程序
         self.app.Quit()
+        self.app = None
+        # 返回导出的PDF文件路径
         return pdf_path
+
+    def wb_to_pdf(self, excel_dir: str, suffix: list = None, recursive=True, pdf_dir: str = None):
+        """
+        将指定目录下的Excel文件转换为PDF格式。
+
+        参数:
+        - excel_dir: str,  Excel文件所在目录
+        - pdf_dir: str, PDF文件的保存目录。如果未提供，则默认保存在Excel文件的同目录下。
+        """
+        suffix = suffix or ["*.xlsx", "*.xls"]
+        excel_path_yield = search_files(excel_dir, suffix, recursive)
+        if self.app is None:
+            self.create_app()
+        for excel_path in excel_path_yield:
+            # 检查并准备文件路径
+            pdf_path = save_file_path(excel_path, ".pdf", pdf_dir)
+            # 打开Excel工作簿
+            workbook = self.app.Workbooks.Open(excel_path)
+            try:
+                # 导出可见的工作表为PDF
+                workbook.ExportAsFixedFormat(0, str(pdf_path))
+            except Exception as e:
+                print(f"导出工作表到PDF时出错：{e}")
+            # 关闭工作簿时不保存更改
+            workbook.Close(SaveChanges=False)
+
+        # 退出Excel应用程序
+        self.app.Quit()
+        self.app = None
 
 
 if __name__ == '__main__':
-    excel = WinExcel()
-    excel_p = f"E:/devProject/office_tool_plus/tests/印尼出口总箱单及详细箱单模板（元亨冷却塔3.19）(1).xlsx"
-    sheet_n = ["156", "157"]
-    excel.to_pdf(excel_p, sheet_n)
+    pass
