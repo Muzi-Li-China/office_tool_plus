@@ -14,7 +14,7 @@ class ExcelTools:
         self.app.Quit()
         self.app = None
 
-    def ws_to_pdf(self, excel_path: str, sheet_names: list = None, pdf_dir: str = None):
+    def single_to_pdf(self, excel_path: str, sheet_names: list = None, pdf_dir: str = None):
         """
         将指定的Excel工作簿导出为PDF格式。
 
@@ -51,20 +51,20 @@ class ExcelTools:
             # 导出可见的工作表为PDF
             workbook.ExportAsFixedFormat(0, str(pdf_path))
         except Exception as e:
-            print(f"导出工作表到PDF时出错：{e}")
+            print(f"导出Excel到PDF时出错：{e}")
 
         # 恢复所有工作表的可见性
         for sheet in sheets_to_hide:
             sheet.Visible = True
-        # 关闭工作簿时不保存更改
+        # 关闭时不保存更改
         workbook.Close(SaveChanges=False)
-        # 退出Excel应用程序
+        # 退出应用程序
         self.app.Quit()
         self.app = None
         # 返回导出的PDF文件路径
         return pdf_path
 
-    def wb_to_pdf(self, excel_dir: str, suffix: list = None, recursive=True, pdf_dir: str = None):
+    def many_to_pdf(self, excel_dir: str, suffix: list = None, recursive=True, pdf_dir: str = None):
         """
         将指定目录下的Excel文件转换为PDF格式。
 
