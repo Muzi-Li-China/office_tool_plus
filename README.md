@@ -1,7 +1,10 @@
 # 安装
 
 ```shell
-pip install office-tool-plus -i https://mirrors.aliyun.com/pypi/simple/
+# 国内源
+pip install -i https://mirrors.aliyun.com/pypi/simple/ --upgrade office-tool-plus
+# 官方源（最新版）
+pip install -i https://pypi.org/simple  --upgrade office-tool-plus
 ```
 
 # 使用
