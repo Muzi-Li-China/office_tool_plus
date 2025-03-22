@@ -131,3 +131,37 @@ word.many_to_pdf('test', recursive=False)
 # 将 test 目录下（不包含子目录）,后缀是 *.docx 的 Word 文件批量导出为 pdf，并保存在 output 目录下
 word.many_to_pdf('test', suffix=['*.docx'], recursive=False, pdf_dir='output')
 ```
+
+## Linux 系统下转换文件格式
+
+### libreoffice(input_path, convert_to, output_dir=None, java_home=None, lang=None):
+
+> 使用LibreOffice在Linux平台上转换文档格式。 需要安装 apk add libreoffice openjdk8 font-noto-cjk
+> - libreoffice ：用于处理Office文件。
+> - openjdk8 ：用于运行LibreOffice。
+> - font-noto-cjk ：用于支持中文字体。
+
+**参数：**
+- input_path: 输入文件的路径。
+- convert_to: 转换后的文件格式。
+- output_dir: 转换后的文件保存的目录。
+- java_home: （可选）Java安装目录的路径，默认使用'/usr/bin/java'。
+- lang: （可选）设置LANG环境变量，默认为'zh_CN.UTF-8'。
+
+
+**返回：**
+
+- `None`
+
+**示例：**
+
+```shell
+from office_tool_plus import libreoffice
+
+# 将 test.xlsx 文件 导出为 pdf ，并保存在源目录下
+libreoffice("test.xlsx", "pdf")
+# 将 test.xlsx 文件 导出为 pdf ，并保存在 output 目录下
+libreoffice("test.xlsx", "pdf", output_dir='output')
+# 将 test.docx 文件 导出为 pdf ，并保存在 output 目录下
+libreoffice("test.docx", "pdf", output_dir='output')
+```

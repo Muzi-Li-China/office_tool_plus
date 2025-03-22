@@ -1,4 +1,6 @@
 import os
+import platform
+import subprocess
 from pathlib import Path
 
 
@@ -136,3 +138,25 @@ def search_files(folder: str, suffix: list, recursive=True):
     for pattern in suffix:
         for file_path in glob_method(pattern):
             yield str(file_path)
+
+
+def check_platform(required_platform):
+    """
+    一个装饰器，用于检查系统平台是否支持特定的函数执行。
+    """
+
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            # 获取当前系统平台信息，并转换为小写以方便比较
+            current_platform = platform.system().lower()
+            # 检查当前系统平台是否与给定的平台参数相匹配
+            if current_platform == required_platform.lower():
+                # 如果匹配，则执行传入的函数并返回结果
+                return func(*args, **kwargs)
+            else:
+                # 如果不匹配，则抛出异常以明确错误情况
+                raise ValueError(f"当前系统是： {current_platform}，该函数只能在 {required_platform} 系统下运行！")
+
+        return wrapper
+
+    return decorator

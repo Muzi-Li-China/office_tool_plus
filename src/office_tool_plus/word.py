@@ -1,5 +1,4 @@
 from .utils import *
-from win32com.client import constants, gencache
 
 
 class WordTools:
@@ -7,6 +6,7 @@ class WordTools:
         self.app = None
 
     def create_app(self):
+        from win32com.client import gencache
         self.app = gencache.EnsureDispatch("Word.Application")
         self.app.Visible = False
 
@@ -14,6 +14,7 @@ class WordTools:
         self.app.Quit()
         self.app = None
 
+    @check_platform('windows')
     def single_to_pdf(self, word_path: str, pdf_dir: str = None):
         """
         将单个Word文档转换为PDF格式。
@@ -22,6 +23,7 @@ class WordTools:
         :param pdf_dir: PDF文件的保存目录，如果未提供，则默认保存在Word文档的同目录下。
         :return: 转换后的PDF文件路径。
         """
+        from win32com.client import constants
         # 检查并准备文件路径
         word_path = check_file_path(word_path)
         pdf_path = save_file_path(word_path, ".pdf", pdf_dir)
@@ -48,6 +50,7 @@ class WordTools:
         # 返回导出的PDF文件路径
         return pdf_path
 
+    @check_platform('windows')
     def many_to_pdf(self, word_dir: str, suffix: list = None, recursive=True, pdf_dir: str = None):
         """
         将指定目录下的Excel文件转换为PDF格式。
@@ -56,6 +59,7 @@ class WordTools:
         - word_dir: str,  Word 文件所在目录
         - pdf_dir: str, PDF文件的保存目录。如果未提供，则默认保存在Excel文件的同目录下。
         """
+        from win32com.client import constants
         suffix = suffix or ["*.doc", "*.docx"]
         word_path_yield = search_files(word_dir, suffix, recursive)
         if self.app is None:

@@ -3,6 +3,8 @@ from .utils import *
 
 class ExcelTools:
     def __init__(self):
+        # 获取当前系统平台信息
+        self.platform = platform.system()
         self.app = None
 
     def create_app(self):
@@ -14,6 +16,7 @@ class ExcelTools:
         self.app.Quit()
         self.app = None
 
+    @check_platform('windows')
     def single_to_pdf(self, excel_path: str, sheet_names: list = None, pdf_dir: str = None):
         """
         将指定的Excel工作簿导出为PDF格式。
@@ -64,6 +67,7 @@ class ExcelTools:
         # 返回导出的PDF文件路径
         return pdf_path
 
+    @check_platform('windows')
     def many_to_pdf(self, excel_dir: str, suffix: list = None, recursive=True, pdf_dir: str = None):
         """
         将指定目录下的Excel文件转换为PDF格式。
@@ -92,7 +96,3 @@ class ExcelTools:
         # 退出Excel应用程序
         self.app.Quit()
         self.app = None
-
-
-if __name__ == '__main__':
-    pass
