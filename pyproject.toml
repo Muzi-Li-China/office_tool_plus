@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "office_tool_plus"
-version = "0.0.6"
+version = "0.0.8"
 authors = [
     { name = "muzili", email = "1537080775@qq.com" },
 ]
@@ -16,7 +16,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "pywin32>=300",
+    'pywin32>=300; platform_system == "Windows"',
     "openpyxl>=3.0.0",
 ]
 license = "MIT"
