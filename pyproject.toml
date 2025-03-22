@@ -10,14 +10,17 @@ authors = [
 ]
 description = "基于 Python 开发的自动化 office 工具包"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.6"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+    "pywin32>=300",
+    "openpyxl>=3.0.0",
+]
 license = "MIT"
-license-files = ["LICEN[CS]E*"]
-
+license-files = { paths = ["LICENSE"] }
 [project.urls]
 Gitee = "https://gitee.com/Muzi-Li-Chine/office_tool_plus"
 Issues = "https://gitee.com/Muzi-Li-Chine/office_tool_plus/issues"
