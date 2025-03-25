@@ -179,10 +179,9 @@ word.from_template(template_file, labor_datas,"./output")
 
 ![img.png](static/img.png)
 
-
 ## Linux 系统下转换文件格式
 
-### libreoffice(input_path, convert_to, output_dir=None, java_home=None, lang=None):
+### single_to_pdf(input_path, convert_to, output_dir=None, java_home=None, lang=None):
 
 > 使用LibreOffice在Linux平台上转换文档格式。 需要安装 apk add libreoffice openjdk8 font-noto-cjk
 > - libreoffice ：用于处理Office文件。
@@ -210,9 +209,34 @@ from office_tool_plus import linux
 linux.single_to_pdf('test.docx')
 # 将 test.xlsx 工作簿导出为 pdf ，并保存在 output 目录下
 linux.single_to_pdf('test.xlsx',"output")
-# 将 test 目录下（包含子目录）所有 .xlsx，.doc 后缀的文件批量导出为 pdf ，并保存在源目录下
-linux.many_to_pdf("test", ['.xlsx', '.doc'])
-# 将 test 目录下（包含子目录）所有 .xlsx，.doc 后缀的文件批量导出为 pdf ，并保存在 output 目录下
-linux.many_to_pdf("test", ['.xlsx', '.doc'], "output")
 ```
 
+### single_to_pdf(input_path, convert_to, output_dir=None, java_home=None, lang=None):
+
+> 使用LibreOffice在Linux平台上转换文档格式。 需要安装 apk add libreoffice openjdk8 font-noto-cjk
+> - libreoffice ：用于处理Office文件。
+> - openjdk8 ：用于运行LibreOffice。
+> - font-noto-cjk ：用于支持中文字体。
+
+**参数：**
+
+- input_path: 输入文件的路径。
+- convert_to: 转换后的文件格式。
+- output_dir: 转换后的文件保存的目录。
+- java_home: （可选）Java安装目录的路径，默认使用'/usr/bin/java'。
+- lang: （可选）设置LANG环境变量，默认为'zh_CN.UTF-8'。
+
+**返回：**
+
+- `None`
+
+**示例：**
+
+```shell
+from office_tool_plus import linux
+
+# 将 test 目录下（包含子目录）所有 .xlsx，.doc 后缀的文件批量导出为 pdf ，并保存在源目录下
+linux.many_to_pdf("test", ['*.xlsx', '*.doc'])
+# 将 test 目录下（包含子目录）所有 .xlsx，.doc 后缀的文件批量导出为 pdf ，并保存在 output 目录下
+linux.many_to_pdf("test", ['*.xlsx', '*.doc'], "output")
+```
