@@ -181,7 +181,7 @@ word.from_template(template_file, labor_datas,"./output")
 
 ## Linux
 
-### single_to_pdf(input_path, convert_to, output_dir=None, java_home=None, lang=None):
+### single_to_pdf(input_path, convert_to="pdf", output_dir=None, java_home=None, lang=None):
 
 > 使用LibreOffice在Linux平台上转换文档格式。 需要安装 apk add libreoffice openjdk8 font-noto-cjk
 > - libreoffice ：用于处理Office文件。
