@@ -13,7 +13,7 @@ pip install --upgrade office-tool-plus -i https://pypi.org/simple
 
 ## excel
 
-### single_to_pdf(excel_path: str, sheet_names: list = None, pdf_dir: str = None):
+### single_to_pdf(excel_path, sheet_names=None, pdf_dir=None):
 
 > 将指定`Excel`工作簿中的工作表导出为`PDF`格式。
 
@@ -42,7 +42,7 @@ excel.single_to_pdf('test.xlsx', ['Sheet1', 'Sheet2'])
 excel.single_to_pdf('test.xlsx', ['Sheet1', 'Sheet2'], 'output')
 ```
 
-### many_to_pdf(excel_dir: str, suffix: list = None, recursive=True, pdf_dir: str = None):
+### many_to_pdf(excel_dir, suffix=None, recursive=True, pdf_dir=None):
 
 > 将指定目录下的`Excel`文件批量导出为`PDF`格式。
 
@@ -74,7 +74,7 @@ excel.many_to_pdf('test', suffix=['*.xlsx'], recursive=False, pdf_dir='output')
 
 ## word
 
-### single_to_pdf(word_path: str, pdf_dir: str = None):
+### single_to_pdf(word_path, pdf_dir=None):
 
 > 将指定的`Word`文档导出为`PDF`格式。
 
@@ -98,7 +98,7 @@ word.single_to_pdf('test.docx')
 word.single_to_pdf('test.docx', pdf_dir='output')
 ```
 
-### many_to_pdf(word_dir: str, suffix: list = None, recursive=True, pdf_dir: str = None):
+### many_to_pdf(word_dir, suffix=None, recursive=True, pdf_dir=None):
 
 > 将指定目录下的`Word`文件批量导出为`PDF`格式。
 
@@ -128,6 +128,58 @@ word.many_to_pdf('test', recursive=False)
 word.many_to_pdf('test', suffix=['*.docx'], recursive=False, pdf_dir='output')
 ```
 
+### from_template(template_file, labor_datas, output_dir=None):
+
+> 根据指定的模板文件生成 Word
+
+**参数：**
+
+- `template_file`: 模板文件地址
+- `labor_datas`: 模板文件中的变量数据，以`[{},{}]`形式传入
+    1. `labor_datas` 是一个列表，列表中的每个元素都是一个字典，字典的键是模板文件中的变量名，值是变量的值。
+    2. 字典中的键名必须与模板文件中的变量名保持一致。
+    3. 最终生成的 word 文件名称，优先取字典中的"文件名"字段，如果不存在，则取字典中的"姓名"字段。，如果仍然不存在，则用模板文件名
+    4. 如果模板中有照片，则需要传入照片地址，支持相对路径和绝对路径
+    5. 所有照片的模板名必须以"照片"结尾
+- `output_dir`: 输出文件保存的目录。如果未提供，则默认保存在模板文件的同目录下。
+
+**返回：**
+
+- `None`
+
+**示例：**
+
+```shell
+from office_tool_plus import word
+
+template_file = f'准考证模板.docx'
+labor_datas = [
+    {'姓名': "王乐",
+     '性别': "女",
+     "身份证号": "421023200001018592",
+     "准考证号": "000001",
+     "报考岗位": "全栈工程师",
+     "头像_照片": "./照片/王乐.png",
+     "内容_照片": r"E:\PythonWork\照片\王乐.png",
+     "内容": """
+     考生须知：
+    1.考试当天，考生凭准考证、有效居民身份证（原件），方可正常参加考试。身份证于2024年4月27日（含）之前过期的视为无效身份证，持身份证复印件、户口薄、户籍证明、电子或纸质身份证明不准参加考试。
+    2.考生自备橡皮、2B铅笔、黑色签字笔等文具。开考后考生不得传递任何物品。
+    3.严禁携带各种通讯设备（如手机、无线耳机、智能手表、运动手环等）、具有计算存储功能的电子设备及与考试相关的资料进入考场。
+    4.考试开始前30分钟允许考生进入考场，对号入座，并将准考证、身份证、普通手表摘下放在桌面靠过道拐角处；考试开始30分钟后不得进入考点；考试不得提前交卷、退场。
+"""
+     },
+]
+
+# 根据模板，生成指定的 Word，并保存在 output 目录下
+word.from_template(template_file, labor_datas,"./output")
+```
+
+**效果：**
+
+![img.png](static/img.png)
+
+
 ## Linux 系统下转换文件格式
 
 ### libreoffice(input_path, convert_to, output_dir=None, java_home=None, lang=None):
@@ -138,12 +190,12 @@ word.many_to_pdf('test', suffix=['*.docx'], recursive=False, pdf_dir='output')
 > - font-noto-cjk ：用于支持中文字体。
 
 **参数：**
+
 - input_path: 输入文件的路径。
 - convert_to: 转换后的文件格式。
 - output_dir: 转换后的文件保存的目录。
 - java_home: （可选）Java安装目录的路径，默认使用'/usr/bin/java'。
 - lang: （可选）设置LANG环境变量，默认为'zh_CN.UTF-8'。
-
 
 **返回：**
 
@@ -163,3 +215,4 @@ linux.many_to_pdf("test", ['.xlsx', '.doc'])
 # 将 test 目录下（包含子目录）所有 .xlsx，.doc 后缀的文件批量导出为 pdf ，并保存在 output 目录下
 linux.many_to_pdf("test", ['.xlsx', '.doc'], "output")
 ```
+

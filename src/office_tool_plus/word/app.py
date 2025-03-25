@@ -1,4 +1,7 @@
+from docx.shared import Inches
+
 from ..utils import *
+from docxtpl import DocxTemplate, InlineImage
 
 
 class WordTools:
@@ -81,3 +84,26 @@ class WordTools:
         # 退出Excel应用程序
         self.app.Quit()
         self.app = None
+
+    @staticmethod
+    def from_template(template_file, labor_datas, output_dir=None):
+        abs_template_file = check_file_path(template_file)
+        # 获取路径、文件名和后缀
+        output_dir = output_dir or os.path.dirname(abs_template_file)
+        template_name = os.path.basename(abs_template_file)
+        tmp_file_name, tmp_file_suffix = os.path.splitext(template_name)
+        # 打开模板文件
+        tmp_doc = DocxTemplate(abs_template_file)
+        for lb in labor_datas:
+            new_file_name = lb.get("文件名", lb.get("姓名", tmp_file_name))
+            photo_key_value = {k: v for k, v in lb.items() if k.endswith("照片")}
+            for photo in photo_key_value:
+
+                img_path = check_file_path(lb.get(photo, None))
+                if img_path:
+                    lb[photo] = InlineImage(tmp_doc, str(img_path), width=Inches(1))
+                else:
+                    lb[photo] = None
+            output_file = unique_file_path(str(os.path.join(output_dir, new_file_name + tmp_file_suffix)))
+            tmp_doc.render(lb)
+            tmp_doc.save(output_file)
