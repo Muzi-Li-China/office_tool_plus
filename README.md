@@ -179,7 +179,7 @@ word.from_template(template_file, labor_datas,"./output")
 
 ![img.png](static/img.png)
 
-## Linux 系统下转换文件格式
+## Linux
 
 ### single_to_pdf(input_path, convert_to, output_dir=None, java_home=None, lang=None):
 
