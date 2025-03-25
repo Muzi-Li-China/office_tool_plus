@@ -190,11 +190,11 @@ word.from_template(template_file, labor_datas,"./output")
 
 **参数：**
 
-- input_path: 输入文件的路径。
-- convert_to: 转换后的文件格式。
-- output_dir: 转换后的文件保存的目录。
-- java_home: （可选）Java安装目录的路径，默认使用'/usr/bin/java'。
-- lang: （可选）设置LANG环境变量，默认为'zh_CN.UTF-8'。
+- `input_path`: 需要转换的文件路径。
+- `convert_to`: 转换后的文件格式。
+- `output_dir`: 转换后的文件保存的目录。
+- `java_home`: （可选）Java安装目录的路径，默认使用`/usr/bin/java`。
+- `lang`: （可选）设置LANG环境变量，默认为`zh_CN.UTF-8`。
 
 **返回：**
 
@@ -211,20 +211,21 @@ linux.single_to_pdf('test.docx')
 linux.single_to_pdf('test.xlsx',"output")
 ```
 
-### single_to_pdf(input_path, convert_to, output_dir=None, java_home=None, lang=None):
+### many_to_pdf(input_dir, suffix, convert_to="pdf", output_dir=None, java_home=None, lang=None, recursive=False):
 
-> 使用LibreOffice在Linux平台上转换文档格式。 需要安装 apk add libreoffice openjdk8 font-noto-cjk
+> 使用LibreOffice在Linux平台上批量转换文档格式。 需要安装 apk add libreoffice openjdk8 font-noto-cjk
 > - libreoffice ：用于处理Office文件。
 > - openjdk8 ：用于运行LibreOffice。
 > - font-noto-cjk ：用于支持中文字体。
 
 **参数：**
 
-- input_path: 输入文件的路径。
-- convert_to: 转换后的文件格式。
-- output_dir: 转换后的文件保存的目录。
-- java_home: （可选）Java安装目录的路径，默认使用'/usr/bin/java'。
-- lang: （可选）设置LANG环境变量，默认为'zh_CN.UTF-8'。
+- `input_dir`: 需要转换的目录。
+- `suffix`: 需要转换的文件后缀名列表。
+- `convert_to`: 转换后的文件格式。
+- `output_dir`: 转换后的文件保存的目录。
+- `java_home`: （可选）Java安装目录的路径，默认使用`/usr/bin/java`。
+- `lang`: （可选）设置LANG环境变量，默认为`zh_CN.UTF-8`。
 
 **返回：**
 
