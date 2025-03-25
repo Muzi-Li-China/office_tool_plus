@@ -1,4 +1,4 @@
-from .utils import *
+from ..utils import *
 
 
 class ExcelTools:
@@ -9,15 +9,16 @@ class ExcelTools:
 
     def create_app(self):
         from win32com.client import gencache
-        self.app = gencache.EnsureDispatch("Excel.Application")
-        self.app.Visible = False
+        if self.app is None:
+            self.app = gencache.EnsureDispatch("Excel.Application")
+            self.app.Visible = False
 
     def close_app(self):
         self.app.Quit()
         self.app = None
 
     @check_platform('windows')
-    def single_to_pdf(self, excel_path: str, sheet_names: list = None, pdf_dir: str = None):
+    def single_to_pdf(self, excel_path, sheet_names=None, pdf_dir=None):
         """
         将指定的Excel工作簿导出为PDF格式。
 
@@ -68,7 +69,7 @@ class ExcelTools:
         return pdf_path
 
     @check_platform('windows')
-    def many_to_pdf(self, excel_dir: str, suffix: list = None, recursive=True, pdf_dir: str = None):
+    def many_to_pdf(self, excel_dir, suffix=None, recursive=True, pdf_dir=None):
         """
         将指定目录下的Excel文件转换为PDF格式。
 

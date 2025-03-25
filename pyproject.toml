@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "office_tool_plus"
-version = "0.0.9"
+version = "0.1.0"
 authors = [
     { name = "muzili", email = "1537080775@qq.com" },
 ]

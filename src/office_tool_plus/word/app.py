@@ -1,4 +1,4 @@
-from .utils import *
+from ..utils import *
 
 
 class WordTools:
@@ -15,7 +15,7 @@ class WordTools:
         self.app = None
 
     @check_platform('windows')
-    def single_to_pdf(self, word_path: str, pdf_dir: str = None):
+    def single_to_pdf(self, word_path, pdf_dir=None):
         """
         将单个Word文档转换为PDF格式。
 
@@ -51,7 +51,7 @@ class WordTools:
         return pdf_path
 
     @check_platform('windows')
-    def many_to_pdf(self, word_dir: str, suffix: list = None, recursive=True, pdf_dir: str = None):
+    def many_to_pdf(self, word_dir, suffix=None, recursive=True, pdf_dir=None):
         """
         将指定目录下的Excel文件转换为PDF格式。
 

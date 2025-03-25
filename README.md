@@ -30,9 +30,8 @@ pip install --upgrade office-tool-plus -i https://pypi.org/simple
 **示例：**
 
 ```shell
-from office_tool_plus import ExcelTools
+from office_tool_plus import excel
 
-excel = ExcelTools()
 # 将整个 Excel 导出为 pdf，并保存在源目录下
 excel.single_to_pdf('test.xlsx')
 # 将整个 Excel 导出为 pdf，并保存在 output 目录下
@@ -61,9 +60,8 @@ excel.single_to_pdf('test.xlsx', ['Sheet1', 'Sheet2'], 'output')
 **示例：**
 
 ```shell
-from office_tool_plus import ExcelTools
+from office_tool_plus import excel
 
-excel = ExcelTools()
 # 将 test 目录下（包含子目录）所有的 Excel 文件批量导出为 pdf，并保存在源目录下
 excel.many_to_pdf('test')
 # 将 test 目录下（包含子目录）所有的 Excel 文件批量导出为 pdf，并保存在 output 目录下
@@ -92,9 +90,8 @@ excel.many_to_pdf('test', suffix=['*.xlsx'], recursive=False, pdf_dir='output')
 **示例：**
 
 ```shell
-from office_tool_plus import WordTools
+from office_tool_plus import word
 
-word = WordTools()
 # 将指定的 Word 导出为 pdf，并保存在源目录下
 word.single_to_pdf('test.docx')
 # 将指定的 Word 导出为 pdf，并保存在 output 目录下
@@ -119,9 +116,8 @@ word.single_to_pdf('test.docx', pdf_dir='output')
 **示例：**
 
 ```shell
-from office_tool_plus import WordTools
+from office_tool_plus import word
 
-word = WordTools()
 # 将 test 目录下（包含子目录）所有的 Word 文件批量导出为 pdf ，并保存在源目录下
 word.many_to_pdf('test')
 # 将 test 目录下（包含子目录）所有的 Word 文件批量导出为 pdf，并保存在 output 目录下
@@ -156,12 +152,14 @@ word.many_to_pdf('test', suffix=['*.docx'], recursive=False, pdf_dir='output')
 **示例：**
 
 ```shell
-from office_tool_plus import libreoffice
+from office_tool_plus import linux
 
-# 将 test.xlsx 文件 导出为 pdf ，并保存在源目录下
-libreoffice("test.xlsx", "pdf")
-# 将 test.xlsx 文件 导出为 pdf ，并保存在 output 目录下
-libreoffice("test.xlsx", "pdf", output_dir='output')
-# 将 test.docx 文件 导出为 pdf ，并保存在 output 目录下
-libreoffice("test.docx", "pdf", output_dir='output')
+# 将 test.docx 文件导出为 pdf ，并保存在源目录下
+linux.single_to_pdf('test.docx')
+# 将 test.xlsx 工作簿导出为 pdf ，并保存在 output 目录下
+linux.single_to_pdf('test.xlsx',"output")
+# 将 test 目录下（包含子目录）所有 .xlsx，.doc 后缀的文件批量导出为 pdf ，并保存在源目录下
+linux.many_to_pdf("test", ['.xlsx', '.doc'])
+# 将 test 目录下（包含子目录）所有 .xlsx，.doc 后缀的文件批量导出为 pdf ，并保存在 output 目录下
+linux.many_to_pdf("test", ['.xlsx', '.doc'], "output")
 ```
