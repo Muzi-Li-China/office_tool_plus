@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "office_tool_plus"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
     { name = "muzili", email = "1537080775@qq.com" },
 ]
@@ -18,7 +18,8 @@ classifiers = [
 dependencies = [
     'pywin32>=300; platform_system == "Windows"',
     "openpyxl>=3.0.0",
-    "docxtpl>=0.19.1"
+    "docxtpl>=0.19.1",
+    "pillow>=8.4.0"
 ]
 license = "MIT"
 license-files = { paths = ["LICENSE"] }
