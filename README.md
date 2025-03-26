@@ -29,7 +29,7 @@ pip install --upgrade office-tool-plus -i https://pypi.org/simple
 
 **示例：**
 
-```shell
+```python
 from office_tool_plus import excel
 
 # 将整个 Excel 导出为 pdf，并保存在源目录下
@@ -59,7 +59,7 @@ excel.single_to_pdf('test.xlsx', ['Sheet1', 'Sheet2'], 'output')
 
 **示例：**
 
-```shell
+```python
 from office_tool_plus import excel
 
 # 将 test 目录下（包含子目录）所有的 Excel 文件批量导出为 pdf，并保存在源目录下
@@ -71,6 +71,88 @@ excel.many_to_pdf('test', recursive=False)
 # 将 test 目录下（不包含子目录）,后缀是 *.xlsx 的 Excel 文件批量导出为 pdf，并保存在 output 目录下
 excel.many_to_pdf('test', suffix=['*.xlsx'], recursive=False, pdf_dir='output')
 ```
+
+### from_template(template_file, labor_datas, sheet_name=None, output_dir=None):
+
+> 根据模板文件和模板数据生成新的 Excel 文件。
+
+**参数：**
+
+- `template_file`: 模板文件地址
+- `labor_datas`: 模板文件中的变量数据，以`[{},{}]`形式传入
+    1. `labor_datas` 是一个列表，列表中的每个元素都是一个字典
+    2. 例如：
+  ```python
+  labor_datas = [
+      {
+          "文件名": "铝材合格证",
+          "数据": [
+              {"A2": {"type": "text", "value": "铝材合格证"}},
+              {"B3": {"type": "text", "value": "AD50-03"}},
+              {"B4": {"type": "text", "value": "50平开扇"}},
+              {"B5": {"type": "text", "value": "白亮光/TMP106/H0YA-0017A"}},
+              {"B6": {"type": "number", "value": 6}},
+              {"E3": {"type": "image", "value": "./照片/AD50-03.png"}},
+          ]
+      }
+  ]
+  ```
+- `sheet_name`: 指定模板工作表，默认为第一个工作表。
+- `output_dir`: 输出文件保存的目录。如果未提供，则默认保存在模板文件的同目录下。
+
+**返回：**
+
+- `None`
+
+**示例：**
+
+```python
+from office_tool_plus import excel
+
+labor_datas = [
+    {
+        "文件名": "铝材合格证",
+        "数据": [
+            {"A2": {"type": "text", "value": "铝材合格证"}},
+            {"B3": {"type": "text", "value": "AD50-03"}},
+            {"B4": {"type": "text", "value": "50平开扇"}},
+            {"B5": {"type": "text", "value": "白亮光/TMP106/H0YA-0017A"}},
+            {"B6": {"type": "number", "value": 6}},
+            {"D6": {"type": "text", "value": "6063-T5"}},
+            {"B7": {"type": "number", "value": 150}},
+            {"B7": {"type": "number", "value": 150}},
+            {"D7": {"type": "number", "value": 0.07}},
+            {"E3": {"type": "image", "value": "./照片/AD50-03.png"}},
+            {"F9": {"type": "date", "value": time.strftime("%Y-%m-%d", time.localtime())}},
+        ]
+    },
+    {
+        "文件名": "型材合格证"
+    },
+    {
+        "数据": [
+            {"A2": {"type": "text", "value": "板材合格证"}},
+            {"B3": {"type": "text", "value": "PYM-5501AH"}},
+            {"B4": {"type": "text", "value": "30框小面"}},
+            {"B5": {"type": "text", "value": "白亮光/TMP106/H0YA-0017A"}},
+            {"B6": {"type": "number", "value": 6}},
+            {"D6": {"type": "text", "value": "6063-T5"}},
+            {"B7": {"type": "number", "value": 150}},
+            {"B7": {"type": "number", "value": 150}},
+            {"D7": {"type": "number", "value": 0.07}},
+            {"E3": {"type": "image", "value": r"E:\PythonWork\照片\PYM-5501AH.jpeg"}},
+            {"F9": {"type": "date", "value": time.strftime("%Y-%m-%d", time.localtime())}},
+        ]
+    },
+]
+template_file = '产品合格证模板.xlsx'
+# 根据模板，生成指定的 Word，并保存在 output 目录下
+excel.from_template(template_file, labor_datas, output_dir="./output")
+```
+
+**效果：**
+
+![img.png](static/img_1.png)
 
 ## word
 
@@ -89,7 +171,7 @@ excel.many_to_pdf('test', suffix=['*.xlsx'], recursive=False, pdf_dir='output')
 
 **示例：**
 
-```shell
+```python
 from office_tool_plus import word
 
 # 将指定的 Word 导出为 pdf，并保存在源目录下
@@ -115,7 +197,7 @@ word.single_to_pdf('test.docx', pdf_dir='output')
 
 **示例：**
 
-```shell
+```python
 from office_tool_plus import word
 
 # 将 test 目录下（包含子目录）所有的 Word 文件批量导出为 pdf ，并保存在源目录下
@@ -149,7 +231,7 @@ word.many_to_pdf('test', suffix=['*.docx'], recursive=False, pdf_dir='output')
 
 **示例：**
 
-```shell
+```python
 from office_tool_plus import word
 
 template_file = f'准考证模板.docx'
@@ -202,7 +284,7 @@ word.from_template(template_file, labor_datas,"./output")
 
 **示例：**
 
-```shell
+```python
 from office_tool_plus import linux
 
 # 将 test.docx 文件导出为 pdf ，并保存在源目录下
@@ -233,7 +315,7 @@ linux.single_to_pdf('test.xlsx',"output")
 
 **示例：**
 
-```shell
+```python
 from office_tool_plus import linux
 
 # 将 test 目录下（包含子目录）所有 .xlsx，.doc 后缀的文件批量导出为 pdf ，并保存在源目录下

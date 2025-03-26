@@ -87,6 +87,20 @@ class WordTools:
 
     @staticmethod
     def from_template(template_file, labor_datas, output_dir=None):
+        """
+        从模板文件生成文档。
+
+        根据提供的模板文件、模板数据以及输出目录，为每个数据生成文档。
+
+        参数:
+        - template_file: 模板文件的路径。
+        - labor_datas: 包含模板替换信息的列表，每个元素是一个字典。
+        - output_dir: 输出文件的目录，如果未提供，则默认为模板文件所在目录。
+
+        返回:
+        无返回值，但会在指定输出目录下生成文档。
+        """
+        # 确保模板文件路径有效
         abs_template_file = check_file_path(template_file)
         # 获取路径、文件名和后缀
         output_dir = output_dir or os.path.dirname(abs_template_file)
@@ -94,16 +108,19 @@ class WordTools:
         tmp_file_name, tmp_file_suffix = os.path.splitext(template_name)
         # 打开模板文件
         tmp_doc = DocxTemplate(abs_template_file)
+        # 遍历数据
         for lb in labor_datas:
+            # 准备文件名和照片
             new_file_name = lb.get("文件名", lb.get("姓名", tmp_file_name))
             photo_key_value = {k: v for k, v in lb.items() if k.endswith("照片")}
             for photo in photo_key_value:
-
                 img_path = check_file_path(lb.get(photo, None))
                 if img_path:
                     lb[photo] = InlineImage(tmp_doc, str(img_path), width=Inches(1))
                 else:
                     lb[photo] = None
+            # 生成唯一的输出文件路径
             output_file = unique_file_path(str(os.path.join(output_dir, new_file_name + tmp_file_suffix)))
+            # 使用数据渲染模板并保存文档
             tmp_doc.render(lb)
             tmp_doc.save(output_file)
