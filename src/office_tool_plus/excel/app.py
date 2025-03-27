@@ -117,7 +117,7 @@ class ExcelTools:
         output_dir = output_dir or os.path.dirname(abs_template_file)
         template_name = os.path.basename(abs_template_file)
         tmp_file_name, tmp_file_suffix = os.path.splitext(template_name)
-
+        output_file_list = []
         # 遍历每个模板数据项
         for lb in labor_datas:
             # 打开模板文件
@@ -142,6 +142,8 @@ class ExcelTools:
             tmp_wb.save(output_file)
             # 关闭工作簿释放资源
             tmp_wb.close()
+            output_file_list.append(output_file)
+        return output_file_list
 
     @staticmethod
     def insert_image(ws, img_path, cell_address):

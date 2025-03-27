@@ -98,7 +98,7 @@ class WordTools:
         - output_dir: 输出文件的目录，如果未提供，则默认为模板文件所在目录。
 
         返回:
-        无返回值，但会在指定输出目录下生成文档。
+        生成的 Word 文件路径列表。
         """
         # 确保模板文件路径有效
         abs_template_file = check_file_path(template_file)
@@ -108,6 +108,7 @@ class WordTools:
         tmp_file_name, tmp_file_suffix = os.path.splitext(template_name)
         # 打开模板文件
         tmp_doc = DocxTemplate(abs_template_file)
+        output_file_list = []
         # 遍历数据
         for lb in labor_datas:
             # 准备文件名和照片
@@ -124,3 +125,5 @@ class WordTools:
             # 使用数据渲染模板并保存文档
             tmp_doc.render(lb)
             tmp_doc.save(output_file)
+            output_file_list.append(output_file)
+        return output_file_list

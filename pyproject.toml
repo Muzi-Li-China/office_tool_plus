@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "office_tool_plus"
-version = "0.1.2"
+version = "0.1.5"
 authors = [
     { name = "muzili", email = "1537080775@qq.com" },
 ]
@@ -12,8 +12,13 @@ description = "基于 Python 开发的自动化 office 工具包"
 readme = "README.md"
 requires-python = ">=3.6"
 classifiers = [
+    "Development Status :: 3 - Alpha",
     "Programming Language :: Python :: 3",
-    "Operating System :: OS Independent",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Natural Language :: Chinese (Simplified)",
+    "Natural Language :: English",
+    "Intended Audience :: Developers"
 ]
 dependencies = [
     'pywin32>=300; platform_system == "Windows"',
@@ -25,4 +30,5 @@ license = "MIT"
 license-files = { paths = ["LICENSE"] }
 [project.urls]
 Gitee = "https://gitee.com/Muzi-Li-Chine/office_tool_plus"
+Github = "https://github.com/Muzi-Li-China/office_tool_plus"
 Issues = "https://gitee.com/Muzi-Li-Chine/office_tool_plus/issues"

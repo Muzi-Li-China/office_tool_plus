@@ -102,7 +102,7 @@ excel.many_to_pdf('test', suffix=['*.xlsx'], recursive=False, pdf_dir='output')
 
 **返回：**
 
-- `None`
+- `output_file_list`：生成的 Excel 文件路径列表。
 
 **示例：**
 
@@ -147,7 +147,7 @@ labor_datas = [
 ]
 template_file = '产品合格证模板.xlsx'
 # 根据模板，生成指定的 Word，并保存在 output 目录下
-excel.from_template(template_file, labor_datas, output_dir="./output")
+output_file_list = excel.from_template(template_file, labor_datas, output_dir="./output")
 ```
 
 **效果：**
@@ -227,7 +227,7 @@ word.many_to_pdf('test', suffix=['*.docx'], recursive=False, pdf_dir='output')
 
 **返回：**
 
-- `None`
+- `output_file_list`：生成的 Word 文件路径列表。
 
 **示例：**
 
@@ -254,7 +254,7 @@ labor_datas = [
 ]
 
 # 根据模板，生成指定的 Word，并保存在 output 目录下
-word.from_template(template_file, labor_datas,"./output")
+output_file_list = word.from_template(template_file, labor_datas, "./output")
 ```
 
 **效果：**
@@ -290,7 +290,7 @@ from office_tool_plus import linux
 # 将 test.docx 文件导出为 pdf ，并保存在源目录下
 linux.single_to_pdf('test.docx')
 # 将 test.xlsx 工作簿导出为 pdf ，并保存在 output 目录下
-linux.single_to_pdf('test.xlsx',"output")
+linux.single_to_pdf('test.xlsx', "output")
 ```
 
 ### many_to_pdf(input_dir, suffix, convert_to="pdf", output_dir=None, java_home=None, lang=None, recursive=False):
